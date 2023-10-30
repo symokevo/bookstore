@@ -12,7 +12,7 @@ router.get("/all-books", checkAuth, (req, res, next){
             books: docs.map(doc => {
                 return {
                     title: doc.title,
-                    auther: doc.auther,
+                    author: doc.author,
                     _id: doc._id,
                     isbn: doc.isbn,
                     price: doc.price,
@@ -37,7 +37,7 @@ router.get("/book-details/:bookId", checkAuth, (req, res, next) => {
             books: docs.map(doc => {
                 return {
                     title: doc.title, 
-                    auther: doc.auther,
+                    author: doc.author,
                     _id:doc.id,
                     isbn: doc.isbn,
                     price: doc.price,
@@ -53,3 +53,48 @@ router.get("/book-details/:bookId", checkAuth, (req, res, next) => {
         });
     });
 });
+
+router.post("/add-book", checkAuth, (req, res, next) => {
+    const book = new Book({
+        _id: new mongoose.Types.ObjectId(),
+        title: req.body.title,
+        author: req.body.author,
+        isbn: req.body.isbn,
+        price:req.body.price,
+    });
+    book
+    .save()
+    .then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: "Book Successfully added",
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error:err
+        });
+    });
+});
+
+router.patch("/updat-book/:bookId", checkAuth, (req, res, next) => {
+    const id = req.params.bookId;
+    const updateOps = {}
+    console.log(req.body);
+
+    Book.update({_id:id}, {$set:req.body})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'Book updated'
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error:err
+        });
+    });
+});
+
