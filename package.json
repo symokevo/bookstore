@@ -1,0 +1,10 @@
+{
+  "name": "bookstore",
+  "version": "1.0.0",
+  "description": "a bookstore done in agular and nodejs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Rabuogi",
+  "license": "ISC"
+}
