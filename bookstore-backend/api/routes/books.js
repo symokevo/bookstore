@@ -98,3 +98,21 @@ router.patch("/updat-book/:bookId", checkAuth, (req, res, next) => {
     });
 });
 
+router.delete("/delete-book/:bookId", checkAuth, (req, res, next) => {
+    const id = req.params.bookId;
+    console.log(id);
+    Book.remove({_id:id})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'Book deleted',
+        });
+    })
+    .catch(err => {
+        res.status(500).json({
+            error:err
+        });
+    });
+});
+
+module.exports  = router;
