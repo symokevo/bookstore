@@ -51,3 +51,44 @@ router.post('/signup', (re,res, next) => {
         }
     })
 })
+
+router.post('/admin-signup', (req, res, next) => {
+            console.log(req.body.email);
+            User.find({email:req.body.email})
+            .exec().then(user => {
+                if(user.lenth > 1) {
+                    return res.status(409).json({
+                        message: "Email already exists"
+                    });
+                } else {
+                    bcrypt.hash(req.body.password, 10, (err, hash) => {
+                        if(err){
+                            return res.status(500).json({
+                                error: err
+                            })
+                        } else {
+                    const  user = new User({
+                        _id: new mongoose.Types.ObjectId(),
+                        email: req.body.email,
+                        passowrd: hash,
+                        name: req.body.name,
+                        user_type: 'admin'
+                    })
+                    user.save()
+                    .then(result => {
+                        res.status(201).json({
+                            message: 'Admin Creation Successful!',
+                            error: err
+                        });
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            message: 'Admin Creation Failed!',
+                            error: err
+                        });
+                    });
+                }
+            })
+        }
+    })
+})
