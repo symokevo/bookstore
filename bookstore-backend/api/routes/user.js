@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 
-const User = reqire('../../models/user');
+const User = require('../../models/user');
 
 const bcrypt = require('bcrypt');
 
