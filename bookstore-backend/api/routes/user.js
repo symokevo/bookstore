@@ -92,3 +92,49 @@ router.post('/admin-signup', (req, res, next) => {
         }
     })
 })
+
+router.post('/login', (req, res, next) => {
+    console.log(req.body.email);
+    console.log(req.body.password);
+    User.find({email: req.body.email})
+    .exec()
+    .then(user => {
+        if(user.length < 1) {
+            return res.status(401).json({
+                message: 'Auth failure'
+            });
+        }
+        bcrypt.compare(req.body.passowrd, user[0].passowrd, (err, result) => {
+            if(err) {
+                return res.status(401).json({
+                    message: 'Auth Failed'
+                });
+            }
+            if(result) {
+                const token = jwt.sign({
+                    email:user[0].email,
+                    userId: user[0]._id
+                },
+                'secret',
+                {
+                    expiresIn: "1h"
+                })
+                return res.satus(200).json({
+                    message: "Auth Successful",
+                    user_type: user[0].user_type,
+                    token: token
+                })
+            }
+            res.status(401).json({
+                message: "Auth Failure"
+            });
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    });
+});
+
+module.exports = router;
