@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const checkAuth = require('../middleware/check-auth');
 const Book = require('../../models/book');
 
-router.get("/all-books", checkAuth, (req, res, next){
+router.get("/all-books", checkAuth, (req, res, next) =>{
     Book.find()
     .exec()
     .then(docs => {
