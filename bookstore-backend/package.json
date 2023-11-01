@@ -2,7 +2,7 @@
   "name": "bookstore-backend",
   "version": "1.0.0",
   "description": "bookstore backend app",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -16,7 +16,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.2.0",
-    "mongoose": "^7.6.3",
+    "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
   }
