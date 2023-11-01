@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://codesimonwise:6iVSWim6HhiGZ26W@cluster0.f36vdgu.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect(DB-URI);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
